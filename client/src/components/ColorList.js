@@ -11,7 +11,6 @@ const ColorList = ({ colors, updateColors }) => {
   console.log("colors",colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
-  const{ push} = useHistory();
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -30,6 +29,7 @@ const ColorList = ({ colors, updateColors }) => {
         console.log("response",res.data)
         console.log(colors)
          colors[id-1]= res.data
+         
     })
     .catch((err)=> {
         console.log(err);
@@ -41,6 +41,16 @@ const ColorList = ({ colors, updateColors }) => {
   const deleteColor = color => {
     // make a delete request to delete this color
     console.log(color)
+    axiosWithAuth()
+    .delete(`/colors/${color.id}`)
+      .then((res) => {
+       //updateColors(res.data);
+       console.log(res.data)
+      })
+      
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
